@@ -31,18 +31,18 @@
 <script lang="ts" setup>
 import { UserOutlined, InfoCircleOutlined } from '@ant-design/icons-vue'
 import { ref } from 'vue'
-import { useI18n } from 'vue-i18n';
+import { useI18n } from 'vue-i18n'
 const theme = ref<string>('theme')
 const localeChanger = ref<string>('locale')
 const loading = ref<boolean>(false)
 const userName = ref<string>('')
-  const { locale } = useI18n();
+const { locale } = useI18n()
 async function saveSetting() {
   loading.value = true
   localStorage.setItem('theme', theme.value)
   localStorage.setItem('locale', locale.value)
   localStorage.setItem('name', userName.value)
-  locale.value = localeChanger.value;
+  locale.value = localeChanger.value
   loading.value = false
 }
 </script>

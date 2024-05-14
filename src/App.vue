@@ -10,19 +10,19 @@
       >
         <a-menu-item key="dashboard">
           <HomeOutlined />
-          <span>{{$t('Dashboard')}}</span>
+          <span>{{ $t('Dashboard') }}</span>
         </a-menu-item>
         <a-menu-item key="toDo">
           <CheckOutlined />
-          <span>{{$t('ToDos')}}</span>
+          <span>{{ $t('ToDos') }}</span>
         </a-menu-item>
         <a-menu-item key="weather">
           <AntCloudOutlined />
-          <span>{{$t('Weather')}}</span>
+          <span>{{ $t('Weather') }}</span>
         </a-menu-item>
         <a-menu-item key="profile">
           <user-outlined />
-          <span>{{$t('Profile')}}</span>
+          <span>{{ $t('Profile') }}</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -76,17 +76,19 @@ if (currentURL.includes('toDoList')) {
 const collapsed = ref<boolean>(false)
 const router = useRouter()
 const state = reactive({
-  theme: localStorage.getItem('theme') as MenuTheme
+  theme: 'dark' as MenuTheme
 })
-
+if (localStorage.getItem('theme') == 'dark') {
+  state.theme = 'dark'
+} else {
+  state.theme = 'light'
+}
 const changeTheme = (checked: boolean) => {
   state.theme = checked ? 'dark' : 'light'
 }
 
 const handleMenuSelect = ({ key }: { key: string }) => {
-  // Update selectedKeys
   selectedKeys.value = [key]
-  // Navigate to the corresponding route
   router.push({ name: key })
 }
 </script>

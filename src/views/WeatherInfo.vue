@@ -1,8 +1,8 @@
 <template>
-  <div style="text-align: center;">
-    <a-select v-model:value="selectedCity" @change="fetchWeatherData" >
+  <div style="text-align: center">
+    <a-select v-model:value="selectedCity" @change="fetchWeatherData">
       <a-select-option v-for="city in cities" :key="city.city" :value="city.city">
-        {{ city.city  }}
+        {{ city.city }}
       </a-select-option>
     </a-select>
 
@@ -17,11 +17,11 @@
 <script setup lang="ts">
 import { fetchWeatherApi } from 'openmeteo'
 import { ref } from 'vue'
-import cityData from '@/assets/ir.json' // Adjust the path accordingly
+import cityData from '@/assets/ir.json'
 
 const cities = ref(cityData)
 const selectedCity = ref('Enter city')
-const weatherData = ref({ current: { temperature2m: 0, weather: '', windSpeed10m: 0 } }) // Initialize as empty object
+const weatherData = ref({ current: { temperature2m: 0, weather: '', windSpeed10m: 0 } })
 
 const fetchWeatherData = async () => {
   const city = cities.value.find((city) => city.city === selectedCity.value)
@@ -35,10 +35,7 @@ const fetchWeatherData = async () => {
     const url = 'https://api.open-meteo.com/v1/forecast'
     const responses = await fetchWeatherApi(url, params)
 
-    // Process first location. Add a for-loop for multiple locations or weather models
     const response = responses[0]
-
-    // Extract relevant weather data
     const currentWeather = response.current()
     if (currentWeather) {
       const temperature2m = currentWeather.variables(0)!.value()
@@ -47,7 +44,6 @@ const fetchWeatherData = async () => {
       const snowfall = currentWeather.variables(3)!.value()
       const windSpeed10m = currentWeather.variables(4)!.value()
 
-      // Determine weather condition
       console.log(rain, showers, snowfall)
       let weather = 'Clear'
       if (rain || showers) {
@@ -56,7 +52,6 @@ const fetchWeatherData = async () => {
         weather = 'snowy'
       }
 
-      // Create an object to hold weather data
       weatherData.value = {
         current: {
           temperature2m,
@@ -70,9 +65,9 @@ const fetchWeatherData = async () => {
 </script>
 
 <style scoped>
-.weather-detail{
-	margin: 13%;
-    padding: 5%;
-    border: 1px solid #eee;
+.weather-detail {
+  margin: 13%;
+  padding: 5%;
+  border: 1px solid #eee;
 }
 </style>

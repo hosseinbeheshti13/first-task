@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HomeView from '../views/DasboardView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,9 +27,18 @@ const router = createRouter({
   ]
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (window.localStorage.getItem('name') == '') next({ name: 'profile' })
-//   else next({ name: 'dashboard' })
-// })
+  router.beforeEach((to, from, next) => {
+    const name = window.localStorage.getItem('name');
+    if (to.name === 'profile') {
+      next();
+    } else {
+      if (!name) {
+        next({ name: 'profile' });
+      } else {
+        next();
+      }
+    }
+  });
+
 
 export default router
