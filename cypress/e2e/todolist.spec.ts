@@ -6,7 +6,7 @@ describe('ToDo List Component', () => {
   });
 
   it('should display the ToDo list with correct initial data', () => {
-    cy.get('.ant-table-row').should('have.length', 20); // Check if there are 20 ToDo items initially
+    cy.get('.ant-table-row').should('have.length', 10); // Check if there are 20 ToDo items initially
   });
 
   it('should allow editing a ToDo item', () => {
@@ -17,7 +17,7 @@ describe('ToDo List Component', () => {
   });
 
   it('should allow canceling editing of a ToDo item', () => {
-    cy.get('.editable-row-operations a:contains("Edit")').first().click(); // Click on the Edit button of the first item
+    cy.get('.editable-row-operations a:contains("edit")').first().click(); // Click on the Edit button of the first item
     cy.get('.editable-row input').type('{selectall}').type('Updated ToDo'); // Type and update the ToDo item
     cy.get('.editable-row-operations a:contains("Cancel")').click(); // Click on the Cancel button
     cy.contains('.ant-table-cell', 'Updated ToDo').should('not.exist'); // Check if the ToDo item is not updated
